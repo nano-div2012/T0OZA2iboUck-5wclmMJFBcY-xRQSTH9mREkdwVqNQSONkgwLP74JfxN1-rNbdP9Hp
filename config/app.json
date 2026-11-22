@@ -1,6 +1,12 @@
 {
-  "appName": "Web App",
-  "packageName": "com.example.webapp",
-  "orientation": "auto",
-  "permissions": ["internet", "network_state"]
+  "appName": "Floating Jull",
+  "packageName": "com.jull.jull.jull",
+  "orientation": "portrait",
+  "permissions": [
+    "notification",
+    "camera",
+    "video",
+    "file_manager",
+    "wifi_state"
+  ]
 }

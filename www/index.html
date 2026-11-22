@@ -1,11 +1,2076 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <meta http-equiv="Refresh" content="0; url='https://example.com/'" />
-    <script>window.location.replace("https://example.com/");</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0e27">
+    <meta name="application-id" content="com.jull.jull.jull">
+    <meta name="package-name" content="com.jull.jull.jull">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: file: https: http:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: file: https: http:; connect-src 'self' https: http:; frame-src 'self' https: http:;">
+    <title>floating jull</title>
+    <style>
+        /* =====================================================
+           floating jull - "Aurora Premium" Theme
+           ===================================================== */
+        :root {
+            --bg-base: #0a0e27;
+            --bg-deep: #050818;
+            --surface-1: rgba(15, 23, 42, 0.88);
+            --surface-2: rgba(15, 23, 42, 0.78);
+            --surface-3: rgba(30, 41, 59, 0.65);
+
+            --primary: #7C3AED;
+            --primary-hover: #8B5CF6;
+            --primary-glow: rgba(124, 58, 237, 0.45);
+
+            --accent: #22D3EE;
+            --accent-hover: #67E8F9;
+            --accent-glow: rgba(34, 211, 238, 0.45);
+
+            --secondary: #EC4899;
+            --tertiary: #10B981;
+
+            --danger: #EF4444;
+            --danger-glow: rgba(239, 68, 68, 0.45);
+
+            --text-primary: #F1F5F9;
+            --text-secondary: rgba(241, 245, 249, 0.72);
+            --text-tertiary: rgba(241, 245, 249, 0.52);
+            --text-on-primary: #FFFFFF;
+
+            --border-subtle: rgba(241, 245, 249, 0.1);
+            --border-accent: rgba(34, 211, 238, 0.3);
+            --border-primary: rgba(124, 58, 237, 0.35);
+
+            --shadow-window: 0 24px 64px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            --shadow-window-active: 0 24px 64px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--accent-glow), 0 0 32px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            --shadow-taskbar: 0 -4px 32px rgba(0, 0, 0, 0.55), 0 -1px 0 rgba(34, 211, 238, 0.18);
+
+            --radius-window: 14px;
+            --radius-card: 12px;
+            --radius-pill: 999px;
+
+            --ease-premium: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: -apple-system, 'SF Pro Display', 'Segoe UI', 'Inter', 'Noto Sans', system-ui, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-base);
+            font-size: 14px;
+            line-height: 1.45;
+            overscroll-behavior: none;
+            touch-action: manipulation;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .hidden { display: none !important; }
+
+        /* BOOT SCREEN */
+        #boot-screen {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(124, 58, 237, 0.35) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(34, 211, 238, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(236, 72, 153, 0.25) 0%, transparent 50%),
+                linear-gradient(135deg, var(--bg-base) 0%, var(--bg-deep) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s var(--ease-premium);
+        }
+
+        #boot-screen.fade-out { opacity: 0; pointer-events: none; }
+
+        .boot-logo {
+            animation: bootPulse 2.4s ease-in-out infinite;
+            filter: drop-shadow(0 0 24px var(--accent-glow)) drop-shadow(0 0 16px var(--primary-glow));
+        }
+
+        .boot-name {
+            margin-top: 28px;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+            text-shadow: 0 0 16px var(--accent-glow), 0 0 32px var(--primary-glow);
+        }
+
+        .boot-spinner {
+            margin-top: 32px;
+            width: 36px;
+            height: 36px;
+            border: 2px solid rgba(34, 211, 238, 0.15);
+            border-top-color: var(--accent);
+            border-right-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        @keyframes bootPulse {
+            0%, 100% { transform: scale(1); opacity: 0.95; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* DESKTOP */
+        #desktop {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 20%, rgba(124, 58, 237, 0.22) 0%, transparent 60%),
+                radial-gradient(ellipse 70% 50% at 80% 30%, rgba(34, 211, 238, 0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 50% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 60%),
+                linear-gradient(135deg, var(--bg-base) 0%, var(--bg-deep) 50%, var(--bg-base) 100%);
+            overflow: hidden;
+        }
+
+        #desktop::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 25% 35%, rgba(255, 255, 255, 0.05) 1px, transparent 1.5px),
+                radial-gradient(circle at 75% 65%, rgba(34, 211, 238, 0.05) 1px, transparent 1.5px);
+            background-size: 40px 40px, 60px 60px;
+            pointer-events: none;
+        }
+
+        #desktop-default-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+            opacity: 0.9;
+        }
+
+        #desktop-default-watermark .watermark-main {
+            font-size: 38px;
+            font-weight: 800;
+            color: #22D3EE;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(34, 211, 238, 0.6), 0 0 40px rgba(124, 58, 237, 0.35);
+        }
+
+        #desktop-default-watermark .watermark-sub {
+            font-size: 12px;
+            color: rgba(241, 245, 249, 0.55);
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        /* DESKTOP ICONS */
+        #desktop-icons {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 1;
+        }
+
+        .desktop-icon {
+            width: 82px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s var(--ease-premium), transform 0.15s var(--ease-premium);
+        }
+
+        .desktop-icon:hover { background: rgba(34, 211, 238, 0.08); }
+        .desktop-icon:active { background: rgba(34, 211, 238, 0.2); transform: scale(0.95); }
+
+        .desktop-icon .icon-img {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s var(--ease-premium), box-shadow 0.2s var(--ease-premium);
+        }
+
+        .desktop-icon:hover .icon-img {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
+        }
+
+        .icon-label {
+            margin-top: 8px;
+            font-size: 11px;
+            color: var(--text-primary);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            word-break: break-word;
+            line-height: 1.15;
+        }
+
+        @media (max-width: 380px) {
+            #desktop-icons { flex-direction: row; flex-wrap: wrap; max-width: calc(100vw - 32px); }
+            .desktop-icon { width: 70px; height: 78px; }
+        }
+
+        /* WINDOWS */
+        #windows-container {
+            position: absolute;
+            inset: 0;
+            bottom: 64px;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .window {
+            position: absolute;
+            background: var(--surface-1);
+            backdrop-filter: blur(32px) saturate(180%);
+            -webkit-backdrop-filter: blur(32px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-window);
+            box-shadow: var(--shadow-window);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            pointer-events: auto;
+            min-width: 280px;
+            min-height: 200px;
+            animation: windowOpen 0.24s var(--ease-out-back);
+        }
+
+        .window.active {
+            box-shadow: var(--shadow-window-active);
+            border-color: rgba(34, 211, 238, 0.35);
+        }
+
+        @keyframes windowOpen {
+            from { opacity: 0; transform: scale(0.94) translateY(8px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .window.closing { animation: windowClose 0.18s var(--ease-premium) forwards; }
+        @keyframes windowClose { to { opacity: 0; transform: scale(0.94) translateY(8px); } }
+
+        .window.minimized {
+            opacity: 0;
+            transform: scale(0.5) translateY(120px);
+            pointer-events: none;
+            transition: opacity 0.24s, transform 0.24s;
+        }
+
+        .window.maximized {
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 0;
+        }
+
+        .window-titlebar {
+            height: 40px;
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.22) 0%, rgba(34, 211, 238, 0.08) 100%);
+            border-bottom: 1px solid rgba(34, 211, 238, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4px 0 14px;
+            cursor: grab;
+            flex-shrink: 0;
+            touch-action: none;
+        }
+
+        .window-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .window-icon { width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .window-title-text { overflow: hidden; text-overflow: ellipsis; }
+        .window-controls { display: flex; gap: 2px; }
+
+        .window-btn {
+            width: 36px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+        }
+
+        .window-btn:hover { background: rgba(255, 255, 255, 0.1); }
+        .window-btn.window-close:hover { background: var(--danger); color: #fff; }
+
+        .window-body {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: rgba(10, 14, 39, 0.45);
+        }
+
+        .window-resize-handle {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 24px;
+            height: 24px;
+            cursor: nwse-resize;
+            z-index: 50;
+            background: linear-gradient(135deg, transparent 50%, var(--accent) 50%, var(--accent) 60%, transparent 60%, transparent 70%, var(--accent) 70%, var(--accent) 80%, transparent 80%);
+            opacity: 0.6;
+            touch-action: none;
+        }
+
+        .window.maximized .window-resize-handle { display: none; }
+
+        /* =====================================================
+           FLOATING BUBBLE & AI + GOOGLE ACTION MENU
+           ===================================================== */
+        #floating-bubble-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 500;
+        }
+
+        #floating-bubble {
+            position: fixed;
+            right: 22px;
+            bottom: 92px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #22D3EE 0%, #7C3AED 100%);
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 24px rgba(34, 211, 238, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            pointer-events: auto;
+            touch-action: none;
+            z-index: 510;
+            transition: box-shadow 0.2s var(--ease-premium), transform 0.18s var(--ease-out-back);
+        }
+
+        #floating-bubble:active { cursor: grabbing; transform: scale(0.95); }
+
+        #floating-bubble.shape-circle { border-radius: 50%; }
+        #floating-bubble.shape-square { border-radius: 6px; }
+        #floating-bubble.shape-rounded { border-radius: 18px; }
+        #floating-bubble.shape-triangle {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            width: 66px;
+            height: 60px;
+        }
+
+        #floating-bubble .bubble-shine {
+            position: absolute;
+            top: 7px;
+            left: 11px;
+            width: 14px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.55);
+            transform: rotate(-28deg);
+            pointer-events: none;
+        }
+
+        #floating-bubble.shape-triangle .bubble-shine { display: none; }
+
+        #floating-bubble .bubble-badge {
+            position: relative;
+            z-index: 2;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            color: #ffffff;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Floating Action Menu (AI & Google Options) */
+        #floating-action-menu {
+            position: fixed;
+            width: 296px;
+            max-width: calc(100vw - 24px);
+            background: rgba(10, 14, 39, 0.96);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid rgba(34, 211, 238, 0.35);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 32px rgba(34, 211, 238, 0.25);
+            padding: 14px;
+            pointer-events: auto;
+            z-index: 520;
+            animation: menuPop 0.18s var(--ease-out-back);
+        }
+
+        @keyframes menuPop {
+            from { opacity: 0; transform: scale(0.92) translateY(6px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .fam-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .fam-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .fam-close {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 13px;
+            line-height: 1;
+        }
+
+        .fam-close:hover { background: var(--danger); color: #fff; }
+
+        .fam-input-wrap {
+            margin-bottom: 10px;
+        }
+
+        .fam-input {
+            width: 100%;
+            padding: 9px 11px;
+            border-radius: 10px;
+            border: 1px solid rgba(34, 211, 238, 0.28);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            font-size: 12.5px;
+            outline: none;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        .fam-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.18);
+        }
+
+        .fam-options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .fam-option-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+            cursor: pointer;
+            text-align: left;
+            transition: transform 0.14s var(--ease-premium), background 0.14s var(--ease-premium), border-color 0.14s var(--ease-premium);
+        }
+
+        .fam-option-btn:hover {
+            background: rgba(34, 211, 238, 0.12);
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .fam-option-btn.ai-mode {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.22), rgba(34, 211, 238, 0.14));
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .fam-option-btn.ai-mode:hover {
+            border-color: #A78BFA;
+            box-shadow: 0 0 16px rgba(124, 58, 237, 0.35);
+        }
+
+        .fam-option-btn.google-mode {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.18), rgba(16, 185, 129, 0.12));
+            border-color: rgba(34, 211, 238, 0.45);
+        }
+
+        .fam-opt-badge {
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .fam-opt-desc {
+            font-size: 10.5px;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+
+        .fam-secondary-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .fam-mini-btn {
+            flex: 1;
+            padding: 7px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .fam-mini-btn:hover {
+            border-color: var(--accent);
+            background: rgba(34, 211, 238, 0.12);
+        }
+
+        /* SHARED UI & SETTINGS */
+        .app-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; color: var(--text-primary); }
+        .bs-scroll { flex: 1; overflow-y: auto; padding: 16px; }
+        .bs-section {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+        .bs-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .bs-status-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .bs-control-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .bs-shapes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        .bs-shape {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        .bs-shape.active {
+            background: rgba(34, 211, 238, 0.18);
+            border-color: var(--accent);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+        .bs-shape-preview {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .bs-shape-circle { border-radius: 50%; }
+        .bs-shape-square { border-radius: 0; }
+        .bs-shape-rounded { border-radius: 8px; }
+        .bs-shape-triangle {
+            background: none; border: none; width: 0; height: 0;
+            border-left: 16px solid transparent; border-right: 16px solid transparent;
+            border-bottom: 28px solid var(--accent);
+        }
+
+        .bs-section-accent {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.06), rgba(124, 58, 237, 0.06));
+            border: 1px solid rgba(34, 211, 238, 0.25);
+        }
+        .bs-color-row { display: flex; align-items: center; gap: 10px; }
+        .bs-color-swatch-accent { width: 44px; height: 44px; border-radius: 10px; border: 2px solid var(--accent); flex-shrink: 0; }
+        .bs-color-val { flex: 1; font-size: 12px; font-family: monospace; }
+        .bs-color-palette { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 12px 0; }
+        .bs-color-chip { aspect-ratio: 1; border-radius: 8px; cursor: pointer; padding: 2px; border: 1px solid rgba(255,255,255,0.2); }
+        .bs-chip-inner { width: 100%; height: 100%; border-radius: 6px; }
+
+        .bs-slider-row { display: flex; align-items: center; gap: 12px; }
+        .bs-slider { flex: 1; accent-color: var(--accent); height: 4px; }
+        .bs-slider-val { min-width: 50px; text-align: right; font-size: 12px; }
+        .bs-hint { font-size: 11px; color: var(--text-tertiary); margin-top: 8px; line-height: 1.5; }
+
+        .bs-feature-toggles { display: flex; flex-direction: column; gap: 8px; }
+        .bs-feature-toggle {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 14px; background: rgba(255, 255, 255, 0.04); border-radius: 10px; font-size: 13px;
+        }
+        .bs-feature-label { display: flex; align-items: center; gap: 10px; }
+        .bs-toggle { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .bs-toggle input { opacity: 0; width: 0; height: 0; }
+        .bs-toggle-slider {
+            position: absolute; cursor: pointer; inset: 0;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid var(--border-accent);
+            border-radius: 14px; transition: 0.25s;
+        }
+        .bs-toggle-slider::before {
+            content: ""; position: absolute; height: 18px; width: 18px; left: 2px; bottom: 2px;
+            background: var(--text-primary); border-radius: 50%; transition: 0.25s;
+        }
+        .bs-toggle input:checked + .bs-toggle-slider { background: linear-gradient(135deg, var(--primary), var(--accent)); }
+        .bs-toggle input:checked + .bs-toggle-slider::before { transform: translateX(20px); background: #fff; }
+
+        .btn {
+            background: rgba(34, 211, 238, 0.12);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            color: var(--text-primary);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.15s var(--ease-premium);
+        }
+        .btn:hover { background: rgba(34, 211, 238, 0.2); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: 1px solid var(--accent);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* AI & GOOGLE PANEL INSIDE WINDOW */
+        .ai-chat-box {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+        .msg-bubble {
+            max-width: 88%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-word;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+        .msg-user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--primary), #5B21B6);
+            color: #fff;
+        }
+        .msg-assistant {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(34, 211, 238, 0.22);
+            color: var(--text-primary);
+        }
+        .ai-input-bar {
+            display: flex;
+            gap: 8px;
+            padding: 10px 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 14, 39, 0.7);
+        }
+        .ai-input-bar input {
+            flex: 1;
+            padding: 9px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-size: 12.5px;
+            outline: none;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        /* TASKBAR */
+        #taskbar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 64px;
+            background: rgba(10, 14, 39, 0.85);
+            backdrop-filter: blur(32px);
+            border-top: 1px solid rgba(34, 211, 238, 0.18);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            z-index: 100;
+            box-shadow: var(--shadow-taskbar);
+        }
+
+        .taskbar-item {
+            height: 44px; min-width: 44px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 10px; cursor: pointer; padding: 0 10px;
+        }
+        .taskbar-item:hover { background: rgba(34, 211, 238, 0.12); }
+
+        #taskbar-apps { flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; overflow-x: auto; }
+        .taskbar-app {
+            width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+            border-radius: 10px; cursor: pointer; position: relative;
+        }
+        .taskbar-app.active::after {
+            content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+            width: 18px; height: 3px; border-radius: 2px; background: var(--accent);
+        }
+
+        #taskbar-tray { display: flex; align-items: center; margin-left: 8px; gap: 6px; }
+        #taskbar-bubble-btn { background: rgba(34, 211, 238, 0.15); border: 1px solid rgba(34, 211, 238, 0.3); }
+        #taskbar-close-btn { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); }
+        #taskbar-time { text-align: right; font-size: 12px; padding: 8px 10px; line-height: 1.35; }
+        #taskbar-time-text { font-weight: 600; }
+
+        /* START MENU */
+        #start-menu {
+            position: absolute;
+            bottom: 72px; left: 50%; transform: translateX(-50%);
+            width: 400px; max-width: calc(100vw - 24px);
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(36px);
+            border: 1px solid rgba(34, 211, 238, 0.25);
+            border-radius: var(--radius-card);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 32px var(--accent-glow);
+            padding: 20px 18px 14px;
+            z-index: 150;
+        }
+        .start-search { margin-bottom: 16px; }
+        .start-search input {
+            width: 100%; padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-accent);
+            border-radius: 10px; color: var(--text-primary); font-size: 13px; outline: none;
+            user-select: text; -webkit-user-select: text;
+        }
+        .start-section-title { color: var(--text-secondary); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .start-apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .start-app {
+            display: flex; flex-direction: column; align-items: center;
+            padding: 12px 4px; border-radius: 10px; cursor: pointer;
+        }
+        .start-app:hover { background: rgba(34, 211, 238, 0.1); }
+        .start-app-icon { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+        .start-app-name { font-size: 11px; text-align: center; }
+        .start-footer {
+            margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-subtle);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .start-user { display: flex; align-items: center; gap: 10px; }
+        .start-user-avatar {
+            width: 30px; height: 30px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            display: flex; align-items: center; justify-content: center; font-weight: 700;
+        }
+        .start-power { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 8px; cursor: pointer; }
+
+        /* NOTIFICATIONS */
+        #notifications {
+            position: fixed; top: 16px; right: 16px; z-index: 9999;
+            display: flex; flex-direction: column; gap: 8px; pointer-events: none;
+        }
+        .notification {
+            background: rgba(10, 14, 39, 0.96);
+            border: 1px solid var(--border-accent);
+            border-radius: 10px; padding: 12px 16px;
+            color: var(--text-primary); font-size: 13px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+        }
+    </style>
 </head>
-<body style="margin:0;padding:0;background-color:#ffffff;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;">
-    Redirecting...
+<body>
+
+    <!-- Boot Screen -->
+    <div id="boot-screen">
+        <div class="boot-logo">
+            <svg viewBox="0 0 100 100" width="84" height="84">
+                <defs>
+                    <linearGradient id="bootGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#22D3EE"/>
+                        <stop offset="50%" stop-color="#7C3AED"/>
+                        <stop offset="100%" stop-color="#EC4899"/>
+                    </linearGradient>
+                </defs>
+                <rect x="10" y="10" width="35" height="35" rx="8" fill="url(#bootGrad)" opacity="0.95"/>
+                <rect x="55" y="10" width="35" height="35" rx="8" fill="url(#bootGrad)" opacity="0.75"/>
+                <rect x="10" y="55" width="35" height="35" rx="8" fill="url(#bootGrad)" opacity="0.75"/>
+                <rect x="55" y="55" width="35" height="35" rx="8" fill="url(#bootGrad)" opacity="0.55"/>
+            </svg>
+        </div>
+        <div class="boot-name">floating jull</div>
+        <div class="boot-spinner"></div>
+    </div>
+
+    <!-- Desktop -->
+    <div id="desktop" class="hidden">
+        <!-- Default wallpaper watermark -->
+        <div id="desktop-default-watermark">
+            <div class="watermark-main">FLOATING JULL</div>
+            <div class="watermark-sub">AI &amp; Google Assistant</div>
+        </div>
+
+        <!-- Desktop icons -->
+        <div id="desktop-icons">
+            <div class="desktop-icon" data-app="bubbleSettings">
+                <div class="icon-img" style="background:linear-gradient(135deg,#22D3EE,#7C3AED);">
+                    <svg viewBox="0 0 24 24" width="32" height="32"><circle cx="12" cy="12" r="9" fill="#fff" opacity="0.3"/><circle cx="9" cy="9" r="2.5" fill="#fff" opacity="0.9"/></svg>
+                </div>
+                <div class="icon-label">floating jull Bubble</div>
+            </div>
+            <div class="desktop-icon" data-app="aiAssistant">
+                <div class="icon-img" style="background:linear-gradient(135deg,#7C3AED,#EC4899);">
+                    <svg viewBox="0 0 24 24" width="30" height="30"><path fill="#fff" d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+                </div>
+                <div class="icon-label">Jull AI</div>
+            </div>
+            <div class="desktop-icon" data-app="scan">
+                <div class="icon-img" style="background:linear-gradient(135deg,#10B981,#06B6D4);">
+                    <svg viewBox="0 0 24 24" width="32" height="32"><path fill="#fff" d="M4,4h6v2H6v4H4V4M14,4h6v6h-2V6h-4V4M4,14h2v4h4v2H4V14M18,14h2v6h-6v-2h4V14M12,10a2,2 0 1,0 0,4a2,2 0 0,0 0,-4z"/></svg>
+                </div>
+                <div class="icon-label">Scan</div>
+            </div>
+            <div class="desktop-icon" data-app="tentang">
+                <div class="icon-img" style="background:linear-gradient(135deg,#22D3EE,#7C3AED);">
+                    <svg viewBox="0 0 24 24" width="32" height="32"><circle cx="12" cy="12" r="10" fill="#0a0e27" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="8" r="1.5" fill="#fff"/><path d="M11 11h2v7h-2z" fill="#fff"/></svg>
+                </div>
+                <div class="icon-label">Tentang</div>
+            </div>
+            <div class="desktop-icon" data-app="carapasang">
+                <div class="icon-img" style="background:linear-gradient(135deg,#22D3EE,#7C3AED);">
+                    <svg viewBox="0 0 24 24" width="32" height="32"><rect x="2" y="5" width="20" height="14" rx="3" fill="#0a0e27" stroke="#fff" stroke-width="1.5"/><path d="M10 9l6 3-6 3z" fill="#fff"/></svg>
+                </div>
+                <div class="icon-label">Cara Pasang</div>
+            </div>
+        </div>
+
+        <!-- Windows container -->
+        <div id="windows-container"></div>
+
+        <!-- Floating Bubble & AI + Google Action Menu -->
+        <div id="floating-bubble-layer">
+            <div id="floating-bubble" class="shape-circle" title="Ketuk untuk opsi AI & Google | Geser untuk memindahkan">
+                <div class="bubble-shine"></div>
+                <span class="bubble-badge">JULL</span>
+            </div>
+
+            <div id="floating-action-menu" class="hidden">
+                <div class="fam-header">
+                    <span class="fam-title">⚡ Floating Jull • AI &amp; Google</span>
+                    <button type="button" class="fam-close" id="fam-close-btn" title="Tutup menu">✕</button>
+                </div>
+                <div class="fam-input-wrap">
+                    <input type="text" id="fam-query-input" class="fam-input" placeholder="Ketik pertanyaan untuk AI atau kata kunci Google...">
+                </div>
+                <div class="fam-options-grid">
+                    <button type="button" class="fam-option-btn ai-mode" id="fam-opt-ai">
+                        <span class="fam-opt-badge">✨ Tanya AI</span>
+                        <span class="fam-opt-desc">Buka panel AI &amp; jawab langsung</span>
+                    </button>
+                    <button type="button" class="fam-option-btn google-mode" id="fam-opt-google">
+                        <span class="fam-opt-badge">🔍 Google Search</span>
+                        <span class="fam-opt-desc">Cari di Google (tab baru / panel)</span>
+                    </button>
+                    <button type="button" class="fam-option-btn ai-mode" id="fam-opt-ai-explain">
+                        <span class="fam-opt-badge">🧠 AI Ringkas / Jelaskan</span>
+                        <span class="fam-opt-desc">Analisis teks cepat dengan AI</span>
+                    </button>
+                    <button type="button" class="fam-option-btn google-mode" id="fam-opt-google-ai">
+                        <span class="fam-opt-badge">🌐 Google + AI Mode</span>
+                        <span class="fam-opt-desc">Buka pencarian Google AI / web</span>
+                    </button>
+                </div>
+                <div class="fam-secondary-row">
+                    <button type="button" class="fam-mini-btn" id="fam-opt-settings">⚙️ Atur Bubble</button>
+                    <button type="button" class="fam-mini-btn" id="fam-opt-hide">🙈 Sembunyikan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Taskbar -->
+        <div id="taskbar">
+            <div id="start-btn" class="taskbar-item" title="Menu Mulai">
+                <svg viewBox="0 0 24 24" width="22" height="22">
+                    <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22D3EE"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
+                    <rect x="3" y="3" width="8" height="8" rx="1.5" fill="url(#sg)"/>
+                    <rect x="13" y="3" width="8" height="8" rx="1.5" fill="url(#sg)"/>
+                    <rect x="3" y="13" width="8" height="8" rx="1.5" fill="url(#sg)"/>
+                    <rect x="13" y="13" width="8" height="8" rx="1.5" fill="url(#sg)"/>
+                </svg>
+            </div>
+            <div id="taskbar-apps"></div>
+            <div id="taskbar-tray">
+                <div id="taskbar-bubble-btn" class="taskbar-item" title="Tampilkan / Opsi Floating Bubble">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22D3EE"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
+                        <circle cx="12" cy="12" r="9" fill="url(#bg)" opacity="0.9"/>
+                        <circle cx="9" cy="9" r="2" fill="#fff" opacity="0.6"/>
+                    </svg>
+                </div>
+                <div id="taskbar-settings-btn" class="taskbar-item" title="Pengaturan Bubble">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="#22D3EE" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l-2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                    </svg>
+                </div>
+                <div id="taskbar-close-btn" class="taskbar-item hidden" title="Tutup jendela aktif">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <circle cx="12" cy="12" r="11" fill="#EF4444"/>
+                        <path d="M7 7L17 17M17 7L7 17" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div id="taskbar-time">
+                    <div id="taskbar-time-text">--:--</div>
+                    <div id="taskbar-date-text">--/--/----</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Menu -->
+        <div id="start-menu" class="hidden">
+            <div class="start-search">
+                <input type="text" id="start-search-input" placeholder="Cari aplikasi di floating jull...">
+            </div>
+            <div class="start-section-title">Semua Aplikasi</div>
+            <div class="start-apps-grid">
+                <div class="start-app" data-app="bubbleSettings" data-name="floating jull bubble">
+                    <div class="start-app-icon" style="background:linear-gradient(135deg,#22D3EE,#7C3AED);border-radius:50%;">
+                        <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="9" fill="#fff" opacity="0.3"/><circle cx="9" cy="9" r="2.5" fill="#fff" opacity="0.9"/></svg>
+                    </div>
+                    <div class="start-app-name">floating jull Bubble</div>
+                </div>
+                <div class="start-app" data-app="aiAssistant" data-name="jull ai asisten">
+                    <div class="start-app-icon" style="background:linear-gradient(135deg,#7C3AED,#EC4899);border-radius:10px;">
+                        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="#fff" d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+                    </div>
+                    <div class="start-app-name">Jull AI</div>
+                </div>
+                <div class="start-app" data-app="scan" data-name="scan ocr gambar">
+                    <div class="start-app-icon" style="background:linear-gradient(135deg,#10B981,#06B6D4);border-radius:6px;">
+                        <svg viewBox="0 0 24 24" width="24" height="24"><path fill="#fff" d="M4,4h6v2H6v4H4V4M14,4h6v6h-2V6h-4V4M4,14h2v4h4v2H4V14M18,14h2v6h-6v-2h4V14M12,10a2,2 0 1,0 0,4a2,2 0 0,0 0,-4z"/></svg>
+                    </div>
+                    <div class="start-app-name">Scan</div>
+                </div>
+                <div class="start-app" data-app="tentang" data-name="tentang info">
+                    <div class="start-app-icon" style="background:linear-gradient(135deg,#22D3EE,#7C3AED);border-radius:6px;">
+                        <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" fill="#0a0e27" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="8" r="1.5" fill="#fff"/><path d="M11 11h2v7h-2z" fill="#fff"/></svg>
+                    </div>
+                    <div class="start-app-name">Tentang</div>
+                </div>
+                <div class="start-app" data-app="carapasang" data-name="cara pasang panduan">
+                    <div class="start-app-icon" style="background:linear-gradient(135deg,#22D3EE,#7C3AED);border-radius:6px;">
+                        <svg viewBox="0 0 24 24" width="24" height="24"><rect x="2" y="5" width="20" height="14" rx="3" fill="#0a0e27" stroke="#fff" stroke-width="1.5"/><path d="M10 9l6 3-6 3z" fill="#fff"/></svg>
+                    </div>
+                    <div class="start-app-name">Cara Pasang</div>
+                </div>
+            </div>
+            <div class="start-footer">
+                <div class="start-user">
+                    <div class="start-user-avatar">J</div>
+                    <div class="start-user-name">floating jull</div>
+                </div>
+                <div class="start-power" id="start-power-btn" title="Keluar / Tutup Semua">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#22D3EE" d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42A6.92 6.92 0 0119 12a7 7 0 01-14 0c0-2.21.91-4.2 2.38-5.41L5.97 5.17A8.932 8.932 0 003 12a9 9 0 0018 0c0-2.74-1.23-5.18-3.17-6.83z"/></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Window Template -->
+    <template id="window-template">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">
+                    <span class="window-icon"></span>
+                    <span class="window-title-text"></span>
+                </div>
+                <div class="window-controls">
+                    <button type="button" class="window-btn window-minimize" title="Minimalkan">
+                        <svg viewBox="0 0 10 10" width="10" height="10"><line x1="0" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1"/></svg>
+                    </button>
+                    <button type="button" class="window-btn window-maximize" title="Maksimalkan">
+                        <svg viewBox="0 0 10 10" width="10" height="10"><rect x="0" y="0" width="10" height="10" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+                    </button>
+                    <button type="button" class="window-btn window-close" title="Tutup">
+                        <svg viewBox="0 0 10 10" width="10" height="10"><line x1="0" y1="0" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="0" x2="0" y2="10" stroke="currentColor" stroke-width="1.2"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="window-body"></div>
+        </div>
+    </template>
+
+    <!-- Notification container -->
+    <div id="notifications"></div>
+
+    <script>
+    /* =====================================================
+       floating jull - Core, Bubble & UI Logic
+       ===================================================== */
+    const APP_INFO = {
+        appName: 'floating jull',
+        version: '3.1.0'
+    };
+
+    function notify(message, duration = 2400) {
+        const container = document.getElementById('notifications');
+        if (!container) return;
+        const notif = document.createElement('div');
+        notif.className = 'notification';
+        notif.textContent = message;
+        container.appendChild(notif);
+        setTimeout(() => notif.remove(), duration);
+    }
+
+    /* ---------- Window Manager ---------- */
+    const WindowManager = (function() {
+        const container = () => document.getElementById('windows-container');
+        const taskbarApps = () => document.getElementById('taskbar-apps');
+        const windows = new Map();
+        let zIndex = 100;
+        let activeId = null;
+        let nextId = 1;
+        const listeners = { focus: [], close: [], minimize: [] };
+
+        function emit(event, payload) {
+            (listeners[event] || []).forEach(fn => {
+                try { fn(payload); } catch (e) { console.error(e); }
+            });
+        }
+        function on(event, fn) {
+            if (!listeners[event]) listeners[event] = [];
+            listeners[event].push(fn);
+        }
+
+        function createWindow(config) {
+            const id = config.id || ('win-' + nextId++);
+            if (config.singleInstance !== false && windows.has(id)) {
+                const existing = windows.get(id);
+                if (existing.state === 'minimized') restoreWindow(id);
+                focusWindow(id);
+                if (config.onReady) {
+                    const body = existing.el.querySelector('.window-body');
+                    requestAnimationFrame(() => config.onReady(body, id));
+                }
+                return id;
+            }
+
+            const tpl = document.getElementById('window-template');
+            const frag = tpl.content.cloneNode(true);
+            const winEl = frag.querySelector('.window');
+
+            const width = config.width || Math.min(390, window.innerWidth - 24);
+            const height = config.height || Math.min(540, window.innerHeight - 90);
+            const offset = (windows.size % 5) * 18;
+            const x = Math.max(8, Math.min(window.innerWidth - width - 8, (window.innerWidth - width) / 2 + offset));
+            const y = Math.max(12, Math.min(window.innerHeight - height - 72, (window.innerHeight - height - 64) / 2 + offset));
+
+            winEl.style.left = x + 'px';
+            winEl.style.top = y + 'px';
+            winEl.style.width = width + 'px';
+            winEl.style.height = height + 'px';
+            winEl.style.zIndex = ++zIndex;
+
+            winEl.querySelector('.window-title-text').textContent = config.title || 'Window';
+            if (config.iconHtml) winEl.querySelector('.window-icon').innerHTML = config.iconHtml;
+
+            const body = winEl.querySelector('.window-body');
+            if (typeof config.content === 'string') body.innerHTML = config.content;
+
+            winEl.querySelector('.window-close').addEventListener('click', (e) => { e.stopPropagation(); closeWindow(id); });
+            winEl.querySelector('.window-minimize').addEventListener('click', (e) => { e.stopPropagation(); minimizeWindow(id); });
+            winEl.querySelector('.window-maximize').addEventListener('click', (e) => { e.stopPropagation(); toggleMaximize(id); });
+
+            const titlebar = winEl.querySelector('.window-titlebar');
+            winEl.addEventListener('pointerdown', () => focusWindow(id), true);
+            makeDraggable(winEl, titlebar, id);
+
+            const resizeHandle = document.createElement('div');
+            resizeHandle.className = 'window-resize-handle';
+            winEl.appendChild(resizeHandle);
+            makeResizable(winEl, resizeHandle, id);
+
+            container().appendChild(winEl);
+
+            const taskbarEl = document.createElement('div');
+            taskbarEl.className = 'taskbar-app';
+            taskbarEl.innerHTML = config.iconHtml || '';
+            taskbarEl.addEventListener('click', () => {
+                const w = windows.get(id);
+                if (!w) return;
+                if (w.state === 'minimized') restoreWindow(id);
+                else if (activeId === id) minimizeWindow(id);
+                else focusWindow(id);
+            });
+            taskbarApps().appendChild(taskbarEl);
+
+            windows.set(id, { el: winEl, state: 'normal', taskbarEl, prevRect: null });
+            focusWindow(id);
+
+            if (config.onReady) requestAnimationFrame(() => config.onReady(body, id));
+            return id;
+        }
+
+        function makeDraggable(winEl, handle, id) {
+            let startX, startY, startLeft, startTop, dragging = false;
+            handle.addEventListener('pointerdown', (e) => {
+                if (e.target.closest('.window-btn') || winEl.classList.contains('maximized')) return;
+                dragging = true;
+                startX = e.clientX; startY = e.clientY;
+                startLeft = parseInt(winEl.style.left, 10) || 0;
+                startTop = parseInt(winEl.style.top, 10) || 0;
+                focusWindow(id);
+                handle.setPointerCapture(e.pointerId);
+            });
+            handle.addEventListener('pointermove', (e) => {
+                if (!dragging) return;
+                winEl.style.left = (startLeft + e.clientX - startX) + 'px';
+                winEl.style.top = Math.max(0, startTop + e.clientY - startY) + 'px';
+            });
+            handle.addEventListener('pointerup', () => { dragging = false; });
+        }
+
+        function makeResizable(winEl, handle, id) {
+            let startX, startY, startW, startH, resizing = false;
+            handle.addEventListener('pointerdown', (e) => {
+                if (winEl.classList.contains('maximized')) return;
+                resizing = true;
+                startX = e.clientX; startY = e.clientY;
+                startW = winEl.offsetWidth; startH = winEl.offsetHeight;
+                focusWindow(id);
+                handle.setPointerCapture(e.pointerId);
+                e.stopPropagation();
+            });
+            handle.addEventListener('pointermove', (e) => {
+                if (!resizing) return;
+                winEl.style.width = Math.max(260, startW + e.clientX - startX) + 'px';
+                winEl.style.height = Math.max(200, startH + e.clientY - startY) + 'px';
+            });
+            handle.addEventListener('pointerup', () => { resizing = false; });
+        }
+
+        function focusWindow(id) {
+            activeId = id;
+            windows.forEach((w, wid) => {
+                if (wid === id) {
+                    w.el.style.zIndex = ++zIndex;
+                    w.el.classList.add('active');
+                    w.taskbarEl.classList.add('active');
+                } else {
+                    w.el.classList.remove('active');
+                    w.taskbarEl.classList.remove('active');
+                }
+            });
+            emit('focus', id);
+        }
+
+        function closeWindow(id) {
+            const w = windows.get(id);
+            if (!w) return;
+            w.el.classList.add('closing');
+            setTimeout(() => {
+                w.el.remove();
+                w.taskbarEl.remove();
+                windows.delete(id);
+                if (activeId === id) {
+                    activeId = null;
+                    emit('focus', null);
+                }
+                emit('close', id);
+            }, 150);
+        }
+
+        function minimizeWindow(id) {
+            const w = windows.get(id);
+            if (!w) return;
+            w.state = 'minimized';
+            w.el.classList.add('minimized');
+            w.taskbarEl.classList.remove('active');
+            if (activeId === id) { activeId = null; emit('focus', null); }
+            emit('minimize', id);
+        }
+
+        function restoreWindow(id) {
+            const w = windows.get(id);
+            if (!w) return;
+            w.state = w.el.classList.contains('maximized') ? 'maximized' : 'normal';
+            w.el.classList.remove('minimized');
+            focusWindow(id);
+        }
+
+        function toggleMaximize(id) {
+            const w = windows.get(id);
+            if (!w) return;
+            if (w.el.classList.contains('maximized')) {
+                w.el.classList.remove('maximized');
+                if (w.prevRect) Object.assign(w.el.style, w.prevRect);
+                w.state = 'normal';
+            } else {
+                w.prevRect = { left: w.el.style.left, top: w.el.style.top, width: w.el.style.width, height: w.el.style.height };
+                w.el.classList.add('maximized');
+                w.state = 'maximized';
+            }
+            focusWindow(id);
+        }
+
+        return {
+            create: createWindow,
+            close: closeWindow,
+            closeAll: () => Array.from(windows.keys()).forEach(closeWindow),
+            activeId: () => activeId,
+            on
+        };
+    })();
+
+    /* ---------- Apps Definition ---------- */
+    const Apps = {};
+
+    Apps.bubbleSettings = {
+        iconHtml: '<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="9" fill="#22D3EE" opacity="0.9"/><circle cx="9" cy="9" r="2" fill="#fff" opacity="0.6"/></svg>',
+        title: 'Pengaturan Bubble - floating jull',
+        STORAGE_KEY: 'floating_jull_bubble_config',
+
+        getConfig() {
+            try {
+                return Object.assign({
+                    visible: true,
+                    shape: 0,
+                    alpha: 0.92,
+                    scale: 1.0,
+                    edgeMargin: 16,
+                    customColor: 0,
+                    customHex: '',
+                    enabledFeatures: ['google_search', 'google_ai', 'translate', 'gallery', 'camera']
+                }, JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '{}'));
+            } catch {
+                return {
+                    visible: true,
+                    shape: 0,
+                    alpha: 0.92,
+                    scale: 1.0,
+                    edgeMargin: 16,
+                    customColor: 0,
+                    customHex: '',
+                    enabledFeatures: ['google_search', 'google_ai', 'translate', 'gallery', 'camera']
+                };
+            }
+        },
+
+        saveConfig(c) {
+            try {
+                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(c));
+            } catch (e) {}
+            if (window.FloatingBubbleController) {
+                FloatingBubbleController.applyConfig(c);
+            }
+            if (window.AndroidBridge && typeof AndroidBridge.updateBubbleConfig === 'function') {
+                try { AndroidBridge.updateBubbleConfig(JSON.stringify(c)); } catch (e) {}
+            }
+        },
+
+        open() {
+            const cfg = this.getConfig();
+            const swatchBg = cfg.customHex
+                ? cfg.customHex
+                : 'linear-gradient(135deg,#22D3EE,#7C3AED)';
+            const swatchLabel = cfg.customHex ? cfg.customHex.toUpperCase() : 'Aurora (Default)';
+
+            const content = `
+                <div class="app-content bubble-settings">
+                    <div class="bs-scroll">
+                        <div class="bs-section">
+                            <div class="bs-section-title">Kontrol Floating Bubble</div>
+                            <div class="bs-control-row">
+                                <button type="button" class="btn btn-primary" id="bs-show-btn" style="flex:1">Tampilkan Bubble</button>
+                                <button type="button" class="btn" id="bs-menu-btn" style="flex:1">Opsi AI &amp; Google</button>
+                                <button type="button" class="btn" id="bs-hide-btn" style="flex:1">Sembunyikan</button>
+                            </div>
+                            <div class="bs-hint">
+                                Ketuk bubble mengambang untuk membuka menu pilihan <strong>AI</strong> dan <strong>Google</strong>. Seret bubble untuk memindahkannya.
+                            </div>
+                        </div>
+
+                        <div class="bs-section">
+                            <div class="bs-section-title">Bentuk Bubble</div>
+                            <div class="bs-shapes">
+                                <div class="bs-shape ${cfg.shape===0?'active':''}" data-shape="0">
+                                    <div class="bs-shape-preview bs-shape-circle"></div><div>Lingkaran</div>
+                                </div>
+                                <div class="bs-shape ${cfg.shape===1?'active':''}" data-shape="1">
+                                    <div class="bs-shape-preview bs-shape-square"></div><div>Kotak</div>
+                                </div>
+                                <div class="bs-shape ${cfg.shape===2?'active':''}" data-shape="2">
+                                    <div class="bs-shape-preview bs-shape-rounded"></div><div>Bulat</div>
+                                </div>
+                                <div class="bs-shape ${cfg.shape===3?'active':''}" data-shape="3">
+                                    <div class="bs-shape-preview bs-shape-triangle"></div><div>Segitiga</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bs-section bs-section-accent">
+                            <div class="bs-section-title">Sesuaikan Warna</div>
+                            <div class="bs-color-row">
+                                <div id="bs-color-swatch" class="bs-color-swatch-accent" style="background:${swatchBg};"></div>
+                                <span class="bs-color-val" id="bs-color-val">${swatchLabel}</span>
+                                <button type="button" class="btn" id="bs-color-reset" style="padding:6px 12px;font-size:11px;">Reset</button>
+                            </div>
+                            <div class="bs-color-palette" id="bs-color-palette">
+                                <div class="bs-color-chip" data-color=""><div class="bs-chip-inner" style="background:linear-gradient(135deg,#22D3EE,#7C3AED);"></div></div>
+                                <div class="bs-color-chip" data-color="#22D3EE"><div class="bs-chip-inner" style="background:#22D3EE;"></div></div>
+                                <div class="bs-color-chip" data-color="#7C3AED"><div class="bs-chip-inner" style="background:#7C3AED;"></div></div>
+                                <div class="bs-color-chip" data-color="#EC4899"><div class="bs-chip-inner" style="background:#EC4899;"></div></div>
+                                <div class="bs-color-chip" data-color="#10B981"><div class="bs-chip-inner" style="background:#10B981;"></div></div>
+                                <div class="bs-color-chip" data-color="#F59E0B"><div class="bs-chip-inner" style="background:#F59E0B;"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="bs-section">
+                            <div class="bs-section-title">Opasitas Bubble</div>
+                            <div class="bs-slider-row">
+                                <input type="range" min="25" max="100" value="${Math.round(cfg.alpha*100)}" id="bs-alpha" class="bs-slider">
+                                <span class="bs-slider-val" id="bs-alpha-val">${Math.round(cfg.alpha*100)}%</span>
+                            </div>
+                        </div>
+
+                        <div class="bs-section">
+                            <div class="bs-section-title">Skala Ukuran</div>
+                            <div class="bs-slider-row">
+                                <input type="range" min="65" max="135" value="${Math.round(cfg.scale*100)}" id="bs-scale" class="bs-slider">
+                                <span class="bs-slider-val" id="bs-scale-val">${Math.round(cfg.scale*100)}%</span>
+                            </div>
+                        </div>
+
+                        <div class="bs-section">
+                            <div class="bs-section-title">Fitur di Menu Bubble</div>
+                            <div class="bs-feature-toggles">
+                                ${['google_search:Google Search', 'google_ai:Google AI Mode', 'translate:Translate', 'gallery:Gallery', 'camera:Camera'].map(item => {
+                                    const [id, label] = item.split(':');
+                                    const isOn = cfg.enabledFeatures.includes(id);
+                                    return `<div class="bs-feature-toggle">
+                                        <span class="bs-feature-label">${label}</span>
+                                        <label class="bs-toggle">
+                                            <input type="checkbox" data-feature-cb="${id}" ${isOn?'checked':''}>
+                                            <span class="bs-toggle-slider"></span>
+                                        </label>
+                                    </div>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return WindowManager.create({
+                id: 'bubbleSettings',
+                title: this.title,
+                iconHtml: this.iconHtml,
+                content,
+                onReady: (body) => {
+                    body.querySelector('#bs-show-btn').addEventListener('click', () => {
+                        cfg.visible = true;
+                        this.saveConfig(cfg);
+                        FloatingBubbleController.show();
+                        notify('Bubble floating jull ditampilkan!');
+                    });
+                    body.querySelector('#bs-menu-btn').addEventListener('click', () => {
+                        cfg.visible = true;
+                        this.saveConfig(cfg);
+                        FloatingBubbleController.show();
+                        FloatingBubbleController.openMenu();
+                    });
+                    body.querySelector('#bs-hide-btn').addEventListener('click', () => {
+                        cfg.visible = false;
+                        this.saveConfig(cfg);
+                        FloatingBubbleController.hide();
+                        notify('Bubble disembunyikan');
+                    });
+                    body.querySelectorAll('.bs-shape').forEach(el => {
+                        el.addEventListener('click', () => {
+                            body.querySelectorAll('.bs-shape').forEach(s => s.classList.remove('active'));
+                            el.classList.add('active');
+                            cfg.shape = parseInt(el.dataset.shape, 10);
+                            this.saveConfig(cfg);
+                        });
+                    });
+                    const setColor = (c) => {
+                        if (!c) {
+                            cfg.customHex = '';
+                            cfg.customColor = 0;
+                            body.querySelector('#bs-color-swatch').style.background = 'linear-gradient(135deg,#22D3EE,#7C3AED)';
+                            body.querySelector('#bs-color-val').textContent = 'Aurora (Default)';
+                        } else {
+                            cfg.customHex = c;
+                            cfg.customColor = 0xFF000000 | parseInt(c.substring(1), 16);
+                            body.querySelector('#bs-color-swatch').style.background = c;
+                            body.querySelector('#bs-color-val').textContent = c.toUpperCase();
+                        }
+                        this.saveConfig(cfg);
+                    };
+                    body.querySelectorAll('.bs-color-chip').forEach(chip => {
+                        chip.addEventListener('click', () => setColor(chip.dataset.color));
+                    });
+                    body.querySelector('#bs-color-reset').addEventListener('click', () => setColor(''));
+                    body.querySelector('#bs-alpha').addEventListener('input', (e) => {
+                        cfg.alpha = parseInt(e.target.value, 10) / 100;
+                        body.querySelector('#bs-alpha-val').textContent = e.target.value + '%';
+                        this.saveConfig(cfg);
+                    });
+                    body.querySelector('#bs-scale').addEventListener('input', (e) => {
+                        cfg.scale = parseInt(e.target.value, 10) / 100;
+                        body.querySelector('#bs-scale-val').textContent = e.target.value + '%';
+                        this.saveConfig(cfg);
+                    });
+                    body.querySelectorAll('[data-feature-cb]').forEach(cb => {
+                        cb.addEventListener('change', () => {
+                            const f = cb.dataset.featureCb;
+                            if (cb.checked && !cfg.enabledFeatures.includes(f)) cfg.enabledFeatures.push(f);
+                            else if (!cb.checked) cfg.enabledFeatures = cfg.enabledFeatures.filter(x => x !== f);
+                            this.saveConfig(cfg);
+                        });
+                    });
+                }
+            });
+        }
+    };
+
+    Apps.aiAssistant = {
+        iconHtml: '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="#EC4899" d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>',
+        title: 'Jull AI Assistant',
+        messages: [
+            { role: 'assistant', text: 'Halo! Saya Jull AI. Ketik pertanyaan apa saja di sini atau langsung dari menu Floating Bubble, lalu pilih mode AI atau Google.' }
+        ],
+
+        generateReply(promptText, mode = 'ai') {
+            const clean = (promptText || '').trim();
+            if (!clean) {
+                return 'Silakan ketik pertanyaan atau topik yang ingin kamu bahas.';
+            }
+            if (mode === 'explain') {
+                return `Penjelasan singkat mengenai "${clean}":
+• Inti topik: ${clean}
+• Ringkasan: Poin utama dari "${clean}" dapat dipahami dengan memecah konsep dasar, contoh penerapan, dan langkah praktisnya.
+• Tips: Kamu juga bisa membuka Google Search dari menu Floating Bubble untuk membandingkan referensi web.`;
+            }
+            return `Respon AI untuk "${clean}":
+Saya siap membantu menguraikan, meringkas, atau menyusun jawaban terkait "${clean}". Jika butuh hasil pencarian web langsung, tekan tombol Google Search di menu Floating Bubble.`;
+        },
+
+        open(initialPrompt = '', mode = 'ai') {
+            if (initialPrompt && initialPrompt.trim()) {
+                this.messages.push({ role: 'user', text: `[${mode === 'explain' ? 'Jelaskan' : 'AI'}] ${initialPrompt.trim()}` });
+                this.messages.push({ role: 'assistant', text: this.generateReply(initialPrompt.trim(), mode) });
+            }
+
+            const renderMsgs = (box) => {
+                box.innerHTML = this.messages.map(m =>
+                    `<div class="msg-bubble ${m.role === 'user' ? 'msg-user' : 'msg-assistant'}">${escapeHtml(m.text)}</div>`
+                ).join('');
+                box.scrollTop = box.scrollHeight;
+            };
+
+            const content = `
+                <div class="app-content">
+                    <div id="ai-chat-history" class="ai-chat-box"></div>
+                    <form id="ai-chat-form" class="ai-input-bar">
+                        <input type="text" id="ai-chat-input" placeholder="Tanya sesuatu ke AI..." autocomplete="off">
+                        <button type="submit" class="btn btn-primary">Kirim</button>
+                    </form>
+                </div>
+            `;
+
+            return WindowManager.create({
+                id: 'aiAssistant',
+                title: this.title,
+                iconHtml: this.iconHtml,
+                content,
+                onReady: (body) => {
+                    const box = body.querySelector('#ai-chat-history');
+                    const form = body.querySelector('#ai-chat-form');
+                    const input = body.querySelector('#ai-chat-input');
+                    renderMsgs(box);
+
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        const val = input.value.trim();
+                        if (!val) return;
+                        this.messages.push({ role: 'user', text: val });
+                        this.messages.push({ role: 'assistant', text: this.generateReply(val, 'ai') });
+                        input.value = '';
+                        renderMsgs(box);
+                    });
+                }
+            });
+        }
+    };
+
+    Apps.googleSearch = {
+        iconHtml: '<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="11" cy="11" r="7" stroke="#22D3EE" stroke-width="2.2" fill="none"/><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="#22D3EE" stroke-width="2.2" stroke-linecap="round"/></svg>',
+        title: 'Google Search - floating jull',
+
+        buildGoogleUrl(queryText, aiMode = false) {
+            const q = (queryText || '').trim();
+            if (!q) {
+                return aiMode ? 'https://www.google.com/search?udm=50' : 'https://www.google.com';
+            }
+            const encoded = encodeURIComponent(q);
+            return aiMode
+                ? `https://www.google.com/search?q=${encoded}&udm=50`
+                : `https://www.google.com/search?q=${encoded}`;
+        },
+
+        open(queryText = '', aiMode = false) {
+            const url = this.buildGoogleUrl(queryText, aiMode);
+            const displayQuery = (queryText || '').trim();
+
+            const content = `
+                <div class="app-content" style="padding:16px;gap:12px;overflow-y:auto;">
+                    <div class="bs-section" style="margin-bottom:0;">
+                        <div class="bs-section-title">${aiMode ? 'Google + AI Mode' : 'Google Search'}</div>
+                        <div style="font-size:12.5px;margin-bottom:10px;line-height:1.5;user-select:text;-webkit-user-select:text;">
+                            Kata kunci: <strong>${escapeHtml(displayQuery || '(Halaman Utama Google)')}</strong>
+                        </div>
+                        <div class="bs-control-row" style="margin-bottom:10px;">
+                            <input type="text" id="gs-query-box" class="fam-input" value="${escapeAttr(displayQuery)}" placeholder="Masukkan kata kunci pencarian Google..." style="flex:1;">
+                            <button type="button" id="gs-open-tab-btn" class="btn btn-primary">Buka Google</button>
+                        </div>
+                        <div class="bs-hint">
+                            Membuka hasil pencarian di tab baru agar tidak terblokir X-Frame-Options browser.
+                        </div>
+                    </div>
+                    <div class="bs-section" style="margin-bottom:0;font-size:12px;line-height:1.6;user-select:text;-webkit-user-select:text;">
+                        <div class="bs-section-title">Tautan Siap Pakai</div>
+                        <div id="gs-url-preview" style="font-family:monospace;font-size:11px;color:#67E8F9;word-break:break-all;">${escapeHtml(url)}</div>
+                    </div>
+                </div>
+            `;
+
+            try {
+                window.open(url, '_blank', 'noopener,noreferrer');
+            } catch (err) {}
+
+            return WindowManager.create({
+                id: 'googleSearch',
+                title: aiMode ? 'Google AI Mode - floating jull' : this.title,
+                iconHtml: this.iconHtml,
+                content,
+                onReady: (body) => {
+                    const input = body.querySelector('#gs-query-box');
+                    const openBtn = body.querySelector('#gs-open-tab-btn');
+                    const preview = body.querySelector('#gs-url-preview');
+
+                    const updatePreview = () => {
+                        const nextUrl = this.buildGoogleUrl(input.value, aiMode);
+                        preview.textContent = nextUrl;
+                        return nextUrl;
+                    };
+
+                    input.addEventListener('input', updatePreview);
+                    openBtn.addEventListener('click', () => {
+                        const targetUrl = updatePreview();
+                        window.open(targetUrl, '_blank', 'noopener,noreferrer');
+                        notify('Membuka Google di tab baru...');
+                    });
+                }
+            });
+        }
+    };
+
+    Apps.scan = {
+        iconHtml: '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="#10B981" d="M4,4h6v2H6v4H4V4M14,4h6v6h-2V6h-4V4M4,14h2v4h4v2H4V14M18,14h2v6h-6v-2h4V14M12,10a2,2 0 1,0 0,4a2,2 0 0,0 0,-4z"/></svg>',
+        title: 'Scan Setting',
+        open() {
+            const content = `
+                <div class="app-content">
+                    <div class="bs-scroll">
+                        <div class="bs-section">
+                            <div class="bs-section-title">Mode Teks (OCR)</div>
+                            <div class="bs-control-row">
+                                <button type="button" class="btn btn-primary scan-action-btn" data-action="search" style="flex:1">Google Search</button>
+                                <button type="button" class="btn btn-primary scan-action-btn" data-action="ai" style="flex:1">AI Assistant</button>
+                                <button type="button" class="btn btn-primary scan-action-btn" data-action="google-ai" style="flex:1">Google AI</button>
+                            </div>
+                        </div>
+                        <div class="bs-section">
+                            <div class="bs-section-title">Mode Gambar (Screenshot)</div>
+                            <div class="bs-control-row">
+                                <button type="button" class="btn scan-action-btn" data-action="search" style="flex:1;background:#10B981;color:#fff;">Google Search</button>
+                                <button type="button" class="btn scan-action-btn" data-action="ai" style="flex:1;background:#10B981;color:#fff;">AI Assistant</button>
+                                <button type="button" class="btn scan-action-btn" data-action="google-ai" style="flex:1;background:#10B981;color:#fff;">Google AI</button>
+                            </div>
+                            <div class="bs-hint" style="margin-top:14px;color:#60A5FA;">
+                                💡 Ketuk salah satu tombol di atas untuk langsung menguji aksi AI atau Google, atau tekan Simpan Perubahan.
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:12px 16px;border-top:1px solid rgba(255,255,255,0.1);">
+                        <button type="button" id="scan-save-btn" class="btn btn-primary" style="width:100%;">💾 Simpan Perubahan</button>
+                    </div>
+                </div>
+            `;
+            return WindowManager.create({
+                id: 'scan',
+                title: this.title,
+                iconHtml: this.iconHtml,
+                content,
+                onReady: (body) => {
+                    body.querySelectorAll('.scan-action-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const act = btn.dataset.action;
+                            if (act === 'ai') Apps.aiAssistant.open('Bantu analisis teks hasil scan layar');
+                            else if (act === 'google-ai') Apps.googleSearch.open('', true);
+                            else Apps.googleSearch.open('', false);
+                        });
+                    });
+                    body.querySelector('#scan-save-btn').addEventListener('click', () => {
+                        notify('✓ Pengaturan Scan tersimpan!');
+                    });
+                }
+            });
+        }
+    };
+
+    Apps.tentang = {
+        iconHtml: '<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="10" fill="#0a0e27" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="8" r="1.5" fill="#fff"/><path d="M11 11h2v7h-2z" fill="#fff"/></svg>',
+        title: 'Tentang floating jull',
+        open() {
+            const content = `
+                <div class="app-content" style="padding:24px 20px;overflow-y:auto;">
+                    <div style="text-align:center;margin-bottom:20px;">
+                        <div style="width:64px;height:64px;margin:0 auto 12px;border-radius:14px;background:linear-gradient(135deg,#22D3EE,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:32px;">⚡</div>
+                        <h2 style="margin:0 0 4px;font-size:22px;color:#22D3EE;">${APP_INFO.appName}</h2>
+                        <div style="opacity:0.6;font-size:11px;margin-top:4px;">Versi ${APP_INFO.version}</div>
+                    </div>
+
+                    <div style="padding:14px;background:rgba(34,211,238,0.08);border:1.5px solid #22D3EE;border-radius:8px;">
+                        <div style="font-weight:bold;color:#22D3EE;margin-bottom:8px;font-size:13px;text-align:center;">📋 Informasi Aplikasi</div>
+                        <div style="color:#B3E5FC;font-size:12px;line-height:1.8;">
+                            • Nama Aplikasi: <strong>${APP_INFO.appName}</strong><br>
+                            • Tema UI: Aurora Premium Glassmorphism<br>
+                            • Fitur: Floating Bubble Interaktif, Opsi AI &amp; Google Search
+                        </div>
+                    </div>
+
+                    <div style="text-align:center;margin-top:24px;opacity:0.5;font-size:11px;">
+                        © 2026 ${APP_INFO.appName}
+                    </div>
+                </div>
+            `;
+            return WindowManager.create({ id: 'tentang', title: this.title, iconHtml: this.iconHtml, content });
+        }
+    };
+
+    Apps.carapasang = {
+        iconHtml: '<svg viewBox="0 0 24 24" width="20" height="20"><rect x="2" y="5" width="20" height="14" rx="3" fill="#0a0e27" stroke="#fff" stroke-width="1.5"/><path d="M10 9l6 3-6 3z" fill="#fff"/></svg>',
+        title: 'Cara Pasang',
+        open() {
+            const content = `
+                <div class="app-content" style="padding:16px;overflow-y:auto;">
+                    <h2 style="margin:0 0 8px;font-size:18px;color:#22D3EE;text-align:center;">Panduan Penggunaan ${APP_INFO.appName}</h2>
+                    <p style="margin:0 0 14px;font-size:12px;opacity:0.8;text-align:center;">
+                        Langkah cepat menggunakan Floating Bubble dan opsi AI / Google:
+                    </p>
+                    <div class="bs-section" style="font-size:12px;line-height:1.8;">
+                        1. Tombol <strong>JULL</strong> mengambang sudah muncul di pojok kanan bawah layar (atau klik ikon bubble di taskbar).<br>
+                        2. <strong>Ketuk</strong> bubble untuk memunculkan menu pilihan <strong>Tanya AI</strong>, <strong>AI Ringkas / Jelaskan</strong>, <strong>Google Search</strong>, atau <strong>Google + AI Mode</strong>.<br>
+                        3. <strong>Geser (drag)</strong> bubble ke posisi mana saja di layar.<br>
+                        4. Buka <strong>floating jull Bubble</strong> untuk mengubah bentuk, warna, opasitas, atau ukuran bubble.
+                    </div>
+                </div>
+            `;
+            return WindowManager.create({ id: 'carapasang', title: this.title, iconHtml: this.iconHtml, content });
+        }
+    };
+
+    window.AppRegistry = Apps;
+
+    /* ---------- Floating Bubble Controller ---------- */
+    const FloatingBubbleController = (function() {
+        const bubbleEl = () => document.getElementById('floating-bubble');
+        const menuEl = () => document.getElementById('floating-action-menu');
+        const queryInput = () => document.getElementById('fam-query-input');
+
+        let isDragging = false;
+        let movedDuringDrag = false;
+        let startX = 0, startY = 0, startLeft = 0, startTop = 0;
+
+        function ensurePositioned() {
+            const b = bubbleEl();
+            if (!b) return;
+            if (!b.style.left || !b.style.top) {
+                const rect = b.getBoundingClientRect();
+                const left = rect.left || Math.max(16, window.innerWidth - 82);
+                const top = rect.top || Math.max(16, window.innerHeight - 152);
+                b.style.right = 'auto';
+                b.style.bottom = 'auto';
+                b.style.left = left + 'px';
+                b.style.top = top + 'px';
+            }
+        }
+
+        function applyConfig(cfg) {
+            const b = bubbleEl();
+            if (!b || !cfg) return;
+
+            b.classList.toggle('hidden', cfg.visible === false);
+            b.classList.remove('shape-circle', 'shape-square', 'shape-rounded', 'shape-triangle');
+            const shapeClasses = ['shape-circle', 'shape-square', 'shape-rounded', 'shape-triangle'];
+            b.classList.add(shapeClasses[cfg.shape] || 'shape-circle');
+
+            const alpha = typeof cfg.alpha === 'number' ? cfg.alpha : 0.92;
+            const scale = typeof cfg.scale === 'number' ? cfg.scale : 1.0;
+            b.style.opacity = String(Math.max(0.2, Math.min(1, alpha)));
+            b.style.transform = `scale(${Math.max(0.5, Math.min(1.5, scale))})`;
+
+            if (cfg.shape === 3) {
+                b.style.background = 'transparent';
+                b.style.borderBottomColor = cfg.customHex || '#22D3EE';
+            } else if (cfg.customHex) {
+                b.style.background = cfg.customHex;
+            } else {
+                b.style.background = 'linear-gradient(135deg, #22D3EE 0%, #7C3AED 100%)';
+            }
+        }
+
+        function show() {
+            const b = bubbleEl();
+            if (!b) return;
+            b.classList.remove('hidden');
+            ensurePositioned();
+        }
+
+        function hide() {
+            const b = bubbleEl();
+            const m = menuEl();
+            if (b) b.classList.add('hidden');
+            if (m) m.classList.add('hidden');
+        }
+
+        function positionMenuNearBubble() {
+            const b = bubbleEl();
+            const m = menuEl();
+            if (!b || !m) return;
+
+            ensurePositioned();
+            const bRect = b.getBoundingClientRect();
+            const menuW = Math.min(296, window.innerWidth - 24);
+            const menuH = 260;
+
+            let left = bRect.left + bRect.width / 2 - menuW / 2;
+            left = Math.max(12, Math.min(window.innerWidth - menuW - 12, left));
+
+            let top = bRect.top - menuH - 12;
+            if (top < 12) {
+                top = Math.min(window.innerHeight - menuH - 76, bRect.bottom + 12);
+            }
+            top = Math.max(12, top);
+
+            m.style.width = menuW + 'px';
+            m.style.left = left + 'px';
+            m.style.top = top + 'px';
+        }
+
+        function openMenu() {
+            const m = menuEl();
+            if (!m) return;
+            show();
+            positionMenuNearBubble();
+            m.classList.remove('hidden');
+            const inp = queryInput();
+            if (inp) setTimeout(() => inp.focus(), 40);
+        }
+
+        function closeMenu() {
+            const m = menuEl();
+            if (m) m.classList.add('hidden');
+        }
+
+        function toggleMenu() {
+            const m = menuEl();
+            if (!m) return;
+            if (m.classList.contains('hidden')) openMenu();
+            else closeMenu();
+        }
+
+        function init() {
+            const b = bubbleEl();
+            const m = menuEl();
+            if (!b || !m) return;
+
+            const initialCfg = Apps.bubbleSettings.getConfig();
+            applyConfig(initialCfg);
+            ensurePositioned();
+
+            b.addEventListener('pointerdown', (e) => {
+                if (e.button !== undefined && e.button !== 0) return;
+                ensurePositioned();
+                isDragging = true;
+                movedDuringDrag = false;
+                startX = e.clientX;
+                startY = e.clientY;
+                startLeft = parseInt(b.style.left, 10) || 0;
+                startTop = parseInt(b.style.top, 10) || 0;
+                b.setPointerCapture(e.pointerId);
+            });
+
+            b.addEventListener('pointermove', (e) => {
+                if (!isDragging) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                if (Math.hypot(dx, dy) > 6) {
+                    movedDuringDrag = true;
+                }
+                const maxX = Math.max(8, window.innerWidth - b.offsetWidth - 8);
+                const maxY = Math.max(8, window.innerHeight - b.offsetHeight - 72);
+                const nextX = Math.max(8, Math.min(maxX, startLeft + dx));
+                const nextY = Math.max(8, Math.min(maxY, startTop + dy));
+                b.style.left = nextX + 'px';
+                b.style.top = nextY + 'px';
+                if (!m.classList.contains('hidden')) {
+                    positionMenuNearBubble();
+                }
+            });
+
+            b.addEventListener('pointerup', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                try { b.releasePointerCapture(e.pointerId); } catch (err) {}
+                if (!movedDuringDrag) {
+                    toggleMenu();
+                }
+            });
+
+            document.getElementById('fam-close-btn').addEventListener('click', closeMenu);
+
+            document.getElementById('fam-opt-ai').addEventListener('click', () => {
+                const q = (queryInput() && queryInput().value) || '';
+                closeMenu();
+                Apps.aiAssistant.open(q, 'ai');
+            });
+
+            document.getElementById('fam-opt-ai-explain').addEventListener('click', () => {
+                const q = (queryInput() && queryInput().value) || '';
+                closeMenu();
+                Apps.aiAssistant.open(q, 'explain');
+            });
+
+            document.getElementById('fam-opt-google').addEventListener('click', () => {
+                const q = (queryInput() && queryInput().value) || '';
+                closeMenu();
+                Apps.googleSearch.open(q, false);
+            });
+
+            document.getElementById('fam-opt-google-ai').addEventListener('click', () => {
+                const q = (queryInput() && queryInput().value) || '';
+                closeMenu();
+                Apps.googleSearch.open(q, true);
+            });
+
+            document.getElementById('fam-opt-settings').addEventListener('click', () => {
+                closeMenu();
+                Apps.bubbleSettings.open();
+            });
+
+            document.getElementById('fam-opt-hide').addEventListener('click', () => {
+                const cfg = Apps.bubbleSettings.getConfig();
+                cfg.visible = false;
+                Apps.bubbleSettings.saveConfig(cfg);
+                hide();
+                notify('Bubble disembunyikan. Klik ikon bubble di taskbar untuk memunculkan lagi.');
+            });
+
+            if (queryInput()) {
+                queryInput().addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const q = queryInput().value;
+                        closeMenu();
+                        Apps.aiAssistant.open(q, 'ai');
+                    }
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (!m.classList.contains('hidden') && !m.contains(e.target) && !b.contains(e.target)) {
+                    closeMenu();
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                ensurePositioned();
+                const rect = b.getBoundingClientRect();
+                const maxX = Math.max(8, window.innerWidth - b.offsetWidth - 8);
+                const maxY = Math.max(8, window.innerHeight - b.offsetHeight - 72);
+                b.style.left = Math.max(8, Math.min(maxX, rect.left)) + 'px';
+                b.style.top = Math.max(8, Math.min(maxY, rect.top)) + 'px';
+                if (!m.classList.contains('hidden')) positionMenuNearBubble();
+            });
+        }
+
+        return { init, applyConfig, show, hide, openMenu, closeMenu, toggleMenu };
+    })();
+
+    /* ---------- Helpers ---------- */
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function escapeAttr(str) {
+        return String(str).replace(/"/g, '&quot;');
+    }
+
+    /* ---------- Boot & Desktop Initialization ---------- */
+    function updateClock() {
+        const now = new Date();
+        const tEl = document.getElementById('taskbar-time-text');
+        const dEl = document.getElementById('taskbar-date-text');
+        if (tEl) tEl.textContent = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false });
+        if (dEl) dEl.textContent = now.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+
+    function boot() {
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        document.querySelectorAll('.desktop-icon, .start-app').forEach(el => {
+            el.addEventListener('click', () => {
+                const appId = el.dataset.app;
+                if (window.AppRegistry && window.AppRegistry[appId]) {
+                    window.AppRegistry[appId].open();
+                }
+                const sm = document.getElementById('start-menu');
+                if (sm) sm.classList.add('hidden');
+            });
+        });
+
+        const searchInput = document.getElementById('start-search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.trim().toLowerCase();
+                document.querySelectorAll('#start-menu .start-app').forEach(appEl => {
+                    const label = (appEl.textContent + ' ' + (appEl.dataset.name || '')).toLowerCase();
+                    appEl.classList.toggle('hidden', Boolean(term) && !label.includes(term));
+                });
+            });
+        }
+
+        const startBtn = document.getElementById('start-btn');
+        const startMenu = document.getElementById('start-menu');
+        startBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            startMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!startMenu.classList.contains('hidden') && !startMenu.contains(e.target) && !startBtn.contains(e.target)) {
+                startMenu.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('taskbar-bubble-btn').addEventListener('click', () => {
+            const cfg = Apps.bubbleSettings.getConfig();
+            cfg.visible = true;
+            Apps.bubbleSettings.saveConfig(cfg);
+            FloatingBubbleController.toggleMenu();
+        });
+
+        document.getElementById('taskbar-settings-btn').addEventListener('click', () => Apps.bubbleSettings.open());
+
+        const closeBtn = document.getElementById('taskbar-close-btn');
+        WindowManager.on('focus', (id) => closeBtn.classList.toggle('hidden', !id));
+        closeBtn.addEventListener('click', () => {
+            const id = WindowManager.activeId();
+            if (id) WindowManager.close(id);
+        });
+
+        document.getElementById('start-power-btn').addEventListener('click', () => {
+            if (confirm('Tutup semua jendela aplikasi?')) {
+                WindowManager.closeAll();
+                FloatingBubbleController.closeMenu();
+                startMenu.classList.add('hidden');
+            }
+        });
+
+        FloatingBubbleController.init();
+
+        setTimeout(() => {
+            const bootScreen = document.getElementById('boot-screen');
+            if (bootScreen) {
+                bootScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    bootScreen.remove();
+                    const desk = document.getElementById('desktop');
+                    if (desk) desk.classList.remove('hidden');
+                    FloatingBubbleController.show();
+                }, 450);
+            }
+        }, 700);
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
+    </script>
 </body>
 </html>
